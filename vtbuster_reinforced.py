@@ -3,19 +3,22 @@
 # IMPORTS
 
 import os
+import re
 import time
 from selenium.webdriver import Chrome
 from selenium import webdriver
 
 # VARIABLES
 
-thor_time_by_second = 601                #                           -Thor          = 10 Minutes
-intezervt_time_by_second = 7201          #                           -intezervt     = 2 Hours
-dnwls0719_time_by_second = 86401         #   DEFAULT TIME VAULE's    -dnwls0719     = 1 Day
-sentoryn_time_by_second = 120961         #                           -Sentoryn      = 1.4 Days
-therealrookie_time_by_second = 302401    #                           -TheRealRookie = 3.5 Days
+thor_time_by_second = 601                #                           -Thor           = 10 Minutes
+intezervt_time_by_second = 7201          #                           -intezervt      = 2 Hours
+dnwls0719_time_by_second = 86401         #   DEFAULT TIME VAULE's    -dnwls0719      = 1 Day
+sentoryn_time_by_second = 120961         #                           -Sentoryn       = 1.4 Days
+alinvirusnever_time_by_second = 604801   #                           -Alinvirusnever = 3.5 Days
 
 optional_Proxy = "0"
+
+tagpool = []
 
 # CHROMEDRIVER SETTINGS
 
@@ -78,10 +81,14 @@ while True:
         comments = driver.find_elements_by_class_name("comment-text")
         time.sleep(1)
 
+        for i in range(len(comments)):
+            tagpool.append(re.findall(r'(?i)\#\w+', comments[i].text))
+
         num_pages_hashes = len(hashes)
         for i in range(num_pages_hashes):
-            f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'thor','tags':'#malware'" + "\n")
+            f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'thor','tags':'"+ str(tagpool[i])[1:-1].lower().replace("'","") + "'\n")
 
+        tagpool = []
         f.close()
         driver.close()
         # THOR SCRIPT ENDS #
@@ -104,10 +111,16 @@ while True:
         comments = driver.find_elements_by_class_name("comment-text")
         time.sleep(1)
 
+        for i in range(len(comments)):
+            tagpool.append(re.findall(r'(?i)\#\w+', comments[i].text))
+            tagpool[i].pop(-1)
+
+
         num_pages_hashes = len(hashes)
         for i in range(num_pages_hashes):
-            f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'intezervt','tags':'#malware'" + "\n")
+            f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'intezervt','tags':'"+ str(tagpool[i])[1:-1].lower().replace("'","") + "'\n")
 
+        tagpool = []
         f.close()
         driver.close()
         # INTEZERVT SCRIPT ENDS #
@@ -130,10 +143,14 @@ while True:
         comments = driver.find_elements_by_class_name("comment-text")
         time.sleep(1)
 
+        for i in range(len(comments)):
+            tagpool.append(re.findall(r'(?i)\#\w+', comments[i].text))
+
         num_pages_hashes = len(hashes)
         for i in range(num_pages_hashes):
-            f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'dnwls0719','tags':'#malware'" + "\n")
+            f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'dnwls0719','tags':'"+ str(tagpool[i])[1:-1].lower().replace("'","") + "'\n")
 
+        tagpool = []
         f.close()
         driver.close()
         # DNWLS0719 SCRIPT ENDS #
@@ -156,22 +173,26 @@ while True:
         comments = driver.find_elements_by_class_name("comment-text")
         time.sleep(1)
 
+        for i in range(len(comments)):
+            tagpool.append(re.findall(r'(?i)\#\w+', comments[i].text))
+
         num_pages_hashes = len(hashes)
         for i in range(num_pages_hashes):
-            f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'sentoryn','tags':'#malware'" + "\n")
+            f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'sentoryn','tags':'"+ str(tagpool[i])[1:-1].lower().replace("'","") + "'\n")
 
+        tagpool = []
         f.close()
         driver.close()
         # SENTORYN SCRIPT ENDS #
         time.sleep(1)
-        # THEREALROOKIE SCRIPT STARTS #
+        # ALINVIRUSNEVER SCRIPT STARTS #
         driver = Chrome(wdriver)
         f = open("./hash_list_busters.txt","a")
 
         x = 0
         looptime = 1
 
-        driver.get("https://www.virustotal.com/en/user/TheRealRookie/")
+        driver.get("https://www.virustotal.com/en/user/AlinVirusnever/")
 
         while x < (looptime - 1):
             driver.execute_script("javascript:more('comments')")
@@ -182,13 +203,18 @@ while True:
         comments = driver.find_elements_by_class_name("comment-text")
         time.sleep(1)
 
+        for i in range(len(comments)):
+            tagpool.append(re.findall(r'(?i)\#\w+', comments[i].text))
+            
         num_pages_hashes = len(hashes)
         for i in range(num_pages_hashes):
-            f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'therealrookie','tags':'#malware'" + "\n")
+            f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'Alinvirusnever','tags':'"+ str(tagpool[i])[1:-1].lower().replace("'","") + ", #Malware" + "'\n")
 
+
+        tagpool = []
         f.close()
         driver.close()
-        # THEREALROOKIE SCRIPT ENDS #
+        # ALINVIRUSNEVER SCRIPT ENDS #
 
         time.sleep(1)
 
@@ -217,10 +243,10 @@ while True:
         else:
             sentoryn_time_by_second = sentoryn_time_by_second
 
-        if therealrookie_time_by_second%2 == 0:
-            therealrookie_time_by_second += 1
+        if alinvirusnever_time_by_second%2 == 0:
+            alinvirusnever_time_by_second += 1
         else:
-            therealrookie_time_by_second = therealrookie_time_by_second
+            alinvirusnever_time_by_second = alinvirusnever_time_by_second
 
         # MAIN LOOP
 
@@ -247,10 +273,14 @@ while True:
                 comments = driver.find_elements_by_class_name("comment-text")
                 time.sleep(1)
 
+                for i in range(len(comments)):
+                    tagpool.append(re.findall(r'(?i)\#\w+', comments[i].text))
+
                 num_pages_hashes = len(hashes)
                 for i in range(num_pages_hashes):
-                    f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'thor','tags':'#malware'" + "\n")
+                    f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'thor','tags':'"+ str(tagpool[i])[1:-1].lower().replace("'","") + "'\n")
 
+                tagpool = []
                 f.close()
                 driver.close()
                 # THOR SCRIPT ENDS #
@@ -274,10 +304,15 @@ while True:
                 comments = driver.find_elements_by_class_name("comment-text")
                 time.sleep(1)
 
+                for i in range(len(comments)):
+                    tagpool.append(re.findall(r'(?i)\#\w+', comments[i].text))
+                    tagpool[i].pop(-1)
+
                 num_pages_hashes = len(hashes)
                 for i in range(num_pages_hashes):
-                    f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'intezervt','tags':'#malware'" + "\n")
+                    f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'intezervt','tags':'"+ str(tagpool[i])[1:-1].lower().replace("'","") + "'\n")
 
+                tagpool = []
                 f.close()
                 driver.close()
                 # INTEZERVT SCRIPT ENDS #
@@ -301,10 +336,14 @@ while True:
                 comments = driver.find_elements_by_class_name("comment-text")
                 time.sleep(1)
 
+                for i in range(len(comments)):
+                    tagpool.append(re.findall(r'(?i)\#\w+', comments[i].text))
+
                 num_pages_hashes = len(hashes)
                 for i in range(num_pages_hashes):
-                    f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'dnwls0719','tags':'#malware'" + "\n")
+                    f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'dnwls0719','tags':'"+ str(tagpool[i])[1:-1].lower().replace("'","") + "'\n")
 
+                tagpool = []
                 f.close()
                 driver.close()
                 # DNWLS0719 SCRIPT ENDS #
@@ -328,23 +367,27 @@ while True:
                 comments = driver.find_elements_by_class_name("comment-text")
                 time.sleep(1)
 
+                for i in range(len(comments)):
+                    tagpool.append(re.findall(r'(?i)\#\w+', comments[i].text))
+
                 num_pages_hashes = len(hashes)
                 for i in range(num_pages_hashes):
-                    f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'sentoryn','tags':'#malware'" + "\n")
+                    f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'sentoryn','tags':'"+ str(tagpool[i])[1:-1].lower().replace("'","") + "'\n")
 
+                tagpool = []
                 f.close()
                 driver.close()
                 # SENTORYN SCRIPT ENDS #
 
-            elif control_time%therealrookie_time_by_second == 0:
-                # THEREALROOKIE SCRIPT STARTS #
+            elif control_time%alinvirusnever_time_by_second == 0:
+                # ALINVIRUSNEVER SCRIPT STARTS #
                 driver = Chrome(wdriver)
                 f = open("./hash_list_busters.txt","a")
 
                 x = 0
                 looptime = 1
 
-                driver.get("https://www.virustotal.com/en/user/TheRealRookie/")
+                driver.get("https://www.virustotal.com/en/user/AlinVirusnever/")
 
                 while x < (looptime - 1):
                     driver.execute_script("javascript:more('comments')")
@@ -355,13 +398,17 @@ while True:
                 comments = driver.find_elements_by_class_name("comment-text")
                 time.sleep(1)
 
+                for i in range(len(comments)):
+                    tagpool.append(re.findall(r'(?i)\#\w+', comments[i].text))
+                    
                 num_pages_hashes = len(hashes)
                 for i in range(num_pages_hashes):
-                    f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'therealrookie','tags':'#malware'" + "\n")
+                    f.write("'hashtype':'sha256','hash':'" + hashes[i].text[5:] + "','source':'Alinvirusnever','tags':'"+ str(tagpool[i])[1:-1].lower().replace("'","") + ", #Malware" + "'\n")
 
+                tagpool = []
                 f.close()
                 driver.close()
-                # THEREALROOKIE SCRIPT ENDS #
+                # ALINVIRUSNEVER SCRIPT ENDS #
             
             time.sleep(1)
 
