@@ -2,7 +2,7 @@
 
 VTBuster python script for getting malware hashes, encyrption types, tags and more...
 
-I made this script specified to 5 user(thor, dnwls0719, intezervt, Sentoryn, TheRealRookie) but you can edit what user you want.
+I made this script specified to 5 user(thor, dnwls0719, intezervt, Sentoryn, Alinvirusnever) but you can edit what user you want.
   
 # What it makes ?
   It gets malware hashes, encyrption types, tags and more information from virustotal malware analyzer users comments.
@@ -15,7 +15,7 @@ I made this script specified to 5 user(thor, dnwls0719, intezervt, Sentoryn, The
   
 # Using
   
-  Just start vtbuster.py and it calls every buster whenever necessary. 
+  Just start vtbuster.py, type required parameters and it calls every buster whenever necessary. 
 
 # Creator Signature
 ![Alt Text](http://emiralanyalioglu.me/signature.gif)
