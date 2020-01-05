@@ -1,6 +1,6 @@
 # Virustotal Buster
 
-VTBuster python script for getting malware hashes, encyrption types, tags and more...
+VTBusterReinforced python script for getting malware hashes, encyrption types, tags and more...
 
 I made this script specified to 5 user(thor, dnwls0719, intezervt, Sentoryn, Alinvirusnever) but you can edit what user you want.
   
