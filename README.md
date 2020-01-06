@@ -7,13 +7,13 @@ I made this script specified to 5 user(thor, dnwls0719, intezervt, Sentoryn, Ali
 # What it makes ?
   It gets malware hashes, encyrption types, tags and more information from virustotal malware analyzer users comments.
   
-# Prerequires
+# Requirements
   
   Python3.8</br>
   Selenium</br>
   chromedriver</br>
   
-# Using
+# How to use?
   
   Just start vtbuster.py, type required parameters and it calls every buster whenever necessary. 
 
