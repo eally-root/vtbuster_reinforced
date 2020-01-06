@@ -9,7 +9,7 @@ I made this script specified to 5 user(thor, dnwls0719, intezervt, Sentoryn, Ali
   
 # Requirements
   
-  Python3.8</br>
+  Python 3.x</br>
   Selenium</br>
   chromedriver</br>
   
