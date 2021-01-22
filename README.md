@@ -10,12 +10,14 @@ I made this script specified to 5 user(thor, dnwls0719, intezervt, Sentoryn, Ali
 # Requirements
   
   Python 3.x</br>
-  Selenium</br>
-  chromedriver</br>
+  Libraries: Selenium, chromedriver
   
 # How to use?
   
   Just start vtbuster.py, type required parameters and it calls every buster whenever necessary. 
 
-# Creator Signature
-![Alt Text](http://emiralanyalioglu.me/signature.gif)
+# Signature
+<a href="https://emiralanyalioglu.com">
+  <img align="center" src="https://raw.githubusercontent.com/eallyy/eallyy/main/code_red.png" />
+</a>
+
